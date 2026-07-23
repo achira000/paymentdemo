@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  payment-backend:
+    image: node:18-alpine
+    container_name: payment-backend
+    working_dir: /app
+    command: sh -c "npm install express && node server.js"
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+
+  kong:
+    image: kong:latest
+    container_name: kong-gateway
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
+    volumes:
+      - ./kong.yml:/usr/local/kong/declarative/kong.yml
+    ports:
+      - "8000:8000"
+      - "8001:8001"
