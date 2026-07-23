@@ -1,0 +1,21 @@
+_format_version: "3.0"
+_transform: true
+services:
+  - name: payment-service
+    url: http://payment-backend:3000
+    routes:
+      - name: payment-route
+        paths:
+          - /api/v1
+    plugins:
+      - name: rate-limiting
+        config:
+          minute: 10
+          policy: local
+      - name: key-auth
+        config:
+          key_in_header: true
+consumers:
+  - username: client_app
+    keyauth_credentials:
+      - key: my-secret-api-key
