@@ -21,4 +21,4 @@ services:
       - ./kong.yml:/usr/local/kong/declarative/kong.yml
     ports:
       - "8000:8000"
-      - "8001:8001"
+      - "8001:8001" 
